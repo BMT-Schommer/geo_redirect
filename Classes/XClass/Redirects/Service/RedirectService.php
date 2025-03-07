@@ -28,9 +28,8 @@ final class RedirectService extends \TYPO3\CMS\Redirects\Service\RedirectService
             return parent::bootFrontendController($manipulatedSite, $queryParams, $originalRequest);
         } catch (Throwable $throwable) {
             // fallback if page is not in the correct language:
-            if ($throwable->getCode() === 1533931402) {
-                return parent::bootFrontendController($site, $queryParams, $originalRequest);
-            }
+            // always use fallback to prevent 503 errors
+            return parent::bootFrontendController($site, $queryParams, $originalRequest);
 
             throw $throwable;
         }
